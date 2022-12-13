@@ -6,6 +6,9 @@ import json
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# arquivo mediaMovel.py
+from mediaMovel import calculeMediaMovel
+
 
 def visualizarDados(dados):
     ''' Função de plotagem '''
@@ -38,26 +41,13 @@ dados = jsonToDataFrame(address)
 # POTENCIA 1100W
 # Training/potencia-1100W/D.3jjg0o89.ingestion-5b88b9545f-ltdhd.json
 
-def mediaMovel(windowSize, eixo, dados_):
-    # atualizando nosso dataFrame para ter apenas
-    # uma coluna 'Fechar' como resto todas as colunas
-    # são inúteis para nós no momento
-    # usando .to_frame() para converter séries de pandas
-    # no dataframe.
-    dados = dados_[eixo].to_frame()
 
-    # calculando média móvel simples
-    # usando .rolling(window).mean() ,
-    # com tamanho da janela = 30
-    dados[eixo] = dados[eixo].rolling(windowSize).mean()
-    dados[[eixo]].plot(figsize=(16, 8))
-    sns.lineplot(data = dados) 
-    plt.show()
+
 
 plotarMediaMovel = int(input("Digite o tamanho da janela: "))
 # separe os eixos com espaços
 verificarEixo = input("Digite o eixo(s) que deseja verificar: ")
 # quebrar a string que contem espaços
 # eixos = verificarEixo.split()
-mediaMovel(plotarMediaMovel, verificarEixo, dados)
+calculeMediaMovel(plotarMediaMovel, verificarEixo, dados)
 
