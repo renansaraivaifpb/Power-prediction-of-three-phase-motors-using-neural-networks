@@ -1,0 +1,6 @@
+
+Observações:
+
+ - Cada arquivo Json foi coletado em uma janela de 4000ms.
+ - Cada arquivo Json tem 250 pontos em cada eixo do acelerômetro.
+ - Frequência de amostragem 62.5Hz (T = 16ms).
