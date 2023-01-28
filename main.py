@@ -27,33 +27,34 @@ def visualizarDados(dados):
     sns.jointplot(data=dados)
     plt.show()
 
+    
+# essa variável serve para ler e salvar o tipo de Set, em csv
 conjunto = 'testing'
 pasta = conjunto+'/'
 
 # Load data
 dados_list, classePotencia, nomeArquivo = carregar_dados(pasta)
 
-# numero total de listas
-# cada tabela representa um arquivo 
-# Calculate moving averages
+
+# Calculo da média móvel
 media_list = [calculeMediaMovel(25, dados_list[i]) for i in range(len(dados_list))]
 
-# Calculate variance
+# calculando a variancia
 variancia_list = [calcularVariance(25, dados_list[i]) for i in range(len(dados_list))]
 
-# Merge moving averages and variance
+# juntando duas listas através do merge
 df2_list = [pd.merge(media_list[i], variancia_list[i], right_index = True, left_index = True) for i in range(len(dados_list))]
 
 
-# Calculate kurtosis
+# Calculando a curtose
 curtose_list = [calcularCurtose(25,dados_list[i]) for i in range(len(dados_list))]
 
 
-# Merge df2 and kurtosis
+# juntar duas listas através do merge
 df3_list = [pd.merge(df2_list[i], curtose_list[i], right_index = True, left_index = True) for i in range(len(dados_list))]
 
 
-# Calculate amplitude
+# Chamar a função calcular amplitude para adicionar em uma lista
 amplitude_list = [calcularAmplitude(dados_list[i],10) for i in range(len(dados_list))]
 
 df1 = pd.DataFrame(amplitude_list)
