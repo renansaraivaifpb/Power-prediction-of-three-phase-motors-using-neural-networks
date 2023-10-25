@@ -1,8 +1,8 @@
 import os  
-# arquivo jsonToDateFrame.py
+# file jsonToDateFrame.py
 from jsonToDateFrame import jsonToDataFrame
 
-def carregar_dados(pasta):
+def load_Data(pasta):
     dados_list = []
     classePotencia = []
     nomeArquivo = []
