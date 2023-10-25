@@ -1,73 +1,66 @@
 import pandas as pd
 
-# bibliotecas para visualizações
+# libraries for visualization
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# arquivo carregarDados.py
-from carregarDados import carregar_dados
+# file loadData.py
+from loadData import load_Data
 
-# arquivo mediaMovel.py
-from mediaMovel import calculeMediaMovel
+# file moving_average.py
+from moving_average import calculateMoving_average
 
-# arquivo variancia.py
-from variancia import calcularVariance
+# file variance.py
+from variance import calculateVariance
 
-# arquivo curtose.py
-from curtose import calcularCurtose
+# file kurtosis.py
+from kurtosis import calculateKurtosis
 
-# arquivo amplitude.py
-from amplitude import calcularAmplitude
+# file amplitude.py
+from amplitude import calculateAmplitude
 
-# arquivo salvarAmplitudeCsv.py
-# from salvarAmplitudeCsv import salvarAmplitudeCSV
-
-def visualizarDados(dados):
-    ''' Função de plotagem '''
+def viewData(dados):
+    ''' Function of plot '''
     sns.jointplot(data=dados)
     plt.show()
 
     
-# essa variável serve para ler e salvar o tipo de Set, em csv
+# this variable is used to read and save the Set type, in csv
 conjunto = 'testing'
 pasta = conjunto+'/'
 
 # Load data
-dados_list, classePotencia, nomeArquivo = carregar_dados(pasta)
+dados_list, classePotencia, nomeArquivo = load_Data(pasta)
 
+# Calculation of the moving average
+media_list = [calculateMoving_average(25, dados_list[i]) for i in range(len(dados_list))]
 
-# Calculo da média móvel
-media_list = [calculeMediaMovel(25, dados_list[i]) for i in range(len(dados_list))]
+# calculating the variance
+variancia_list = [calculateVariance(25, dados_list[i]) for i in range(len(dados_list))]
 
-# calculando a variancia
-variancia_list = [calcularVariance(25, dados_list[i]) for i in range(len(dados_list))]
-
-# juntando duas listas através do merge
+# joining two lists using merge
 df2_list = [pd.merge(media_list[i], variancia_list[i], right_index = True, left_index = True) for i in range(len(dados_list))]
 
+# Calculating kurtosis
+curtose_list = [calculateKurtosis(25,dados_list[i]) for i in range(len(dados_list))]
 
-# Calculando a curtose
-curtose_list = [calcularCurtose(25,dados_list[i]) for i in range(len(dados_list))]
-
-
-# juntar duas listas através do merge
+# join two lists using merge
 df3_list = [pd.merge(df2_list[i], curtose_list[i], right_index = True, left_index = True) for i in range(len(dados_list))]
 
-
-# Chamar a função calcular amplitude para adicionar em uma lista
-amplitude_list = [calcularAmplitude(dados_list[i],10) for i in range(len(dados_list))]
+# Call the calculate amplitude function to add to a list
+amplitude_list = [calculateAmplitude(dados_list[i],10) for i in range(len(dados_list))]
 
 df1 = pd.DataFrame(amplitude_list)
 df2 = pd.DataFrame(classePotencia, columns=['Y'])
 
-# Mapeando valores da classe de potencia
+# Mapping power class values
 df2['Y'] = df2['Y'].map({'A': 0.22, 'B': 0.32, 'C': 0.62, 'D': 1.15, 'E': 0.27, 'F': 0.50, 'G': 0.85, 'H': 1.00})
 
-# Concatenando dataframes
+# Concatenating dataframes
 conjuntoDados = pd.concat([df1, df2], axis=1, ignore_index=True)
 
-# Renomeando colunas
+# Renaming columns
 conjuntoDados.columns = list(df1.columns) + ['Y']
 
-# Salvando em arquivo CSV
+# Saving to CSV file
 conjuntoDados.to_csv(conjunto+'.csv', index=False)
