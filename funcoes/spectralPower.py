@@ -1,6 +1,6 @@
 import numpy as np
 
-# Skewness (assimetria) de uma distribuição de dados
+# Skewness (asymmetry) of a data distribution
 def calcularSpectralPower(dados_,fs):
     
     # assuming 'accX', 'accY', 'accZ' are lists or numpy arrays containing the raw data
