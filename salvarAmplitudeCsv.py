@@ -1,13 +1,13 @@
 def salvarAmplitudeCSV(amplitude_list_):
     import csv
-# Abre o arquivo em modo de escrita
+# Open the file in writing mode
     with open('arquivo.csv', mode='w', newline='') as arquivo:
-        # Cria um objeto de escrita de CSV
+        # Create a CSV write object
         escritor = csv.writer(arquivo)
-        # Escreve os cabeçalhos no arquivo CSV
+        # Write headers to CSV file
         escritor.writerow(['amplitude_X', 'amplitude_Y', 'amplitudeZ'])
 
-        # Para cada linha da lista de dados
+        # For each row of the data list
         for linha in amplitude_list_:
-            # Adiciona o cabeçalho à linha e escreve a linha no arquivo CSV
+            # Add the header to the line and write the line to the CSV file
             escritor.writerow(linha)
