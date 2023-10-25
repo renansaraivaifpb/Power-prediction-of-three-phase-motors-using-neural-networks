@@ -1,7 +1,7 @@
 import numpy as np
 
 def calcularRMS(dados_):
-    ''' calcular o valor RMS dos dados de aceleração '''
+    ''' calculate the RMS value of acceleration data '''
     dados_['accX RMS'] = np.sqrt(np.mean(np.square(dados_['accX'])))
     dados_['accY RMS']  = np.sqrt(np.mean(np.square(dados_['accY'])))
     dados_['accZ RMS']  = np.sqrt(np.mean(np.square(dados_['accZ'])))
